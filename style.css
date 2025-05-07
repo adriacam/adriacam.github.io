@@ -1,0 +1,136 @@
+/* style.css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #0a0f14;
+  color: #e0e6ed;
+  font-family: 'Roboto Mono', monospace;
+}
+
+body {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  /* subtle starfield background */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #8BC34A, #00edff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: text-shadow 0.3s;
+  cursor: pointer;
+}
+
+h1:hover {
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { text-shadow: 0 0 8px rgba(139,195,74,0.7); }
+  to   { text-shadow: 0 0 20px rgba(0,237,255,0.7); }
+}
+
+p.subtitle {
+  font-size: 1.1rem;
+  color: #8aaebf;
+  margin-top: 0.5rem;
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #8BC34A;
+  border-bottom: 2px solid #2e3b48;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  transition: text-shadow 0.3s;
+  cursor: pointer;
+}
+
+h2:hover {
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin: 0.75rem 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+li .role {
+  font-weight: bold;
+  width: 8rem;
+  color: #00edff;
+}
+
+li p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #c0cbd6;
+}
+
+.status {
+  color: #ffae00;
+  margin-left: 0.5rem;
+}
+
+a {
+  color: #8BC34A;
+  text-decoration: none;
+  position: relative;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: #8BC34A;
+  transition: width 0.3s;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #2e3b48;
+}
+
+footer a {
+  font-size: 1rem;
+  color: #8BC34A;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  body { padding: 1rem; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+}
