@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Adria Cammerer Llodra – Mechatronics & Sustainable Tech</title>
+  <title>Adria Cammerer Llodra – Mechatronics Engineering Student</title>
   <meta name="description" content="Mallorcan mechatronics student in Germany passionate about aerospace, automation, signal processing, control systems, and embedded development.">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- 3D model viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header>
     <h1>Adria Cammerer Llodra</h1>
-    <p class="subtitle">Space • Automation & Robotics • Signal Processing & Control Systems • Embedded Systems</p>
+    <p class="subtitle">Mechatronics • Robotics • Signal Processing • Embedded Systems</p>
   </header>
 
   <section>
@@ -38,14 +41,25 @@
   <section>
     <h2>Showcase</h2>
     <div class="showcase-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+      
+      <!-- Interactive 3D Model -->
       <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
-        <div style="font-size: 2rem;">🗎</div>
-        <a href="files/3d-cad-model.step" target="_blank">3D CAD Models</a>
+        <div style="font-size:1.2rem; margin-bottom:0.5rem;">🚀 Rocket Model</div>
+        <model-viewer
+          src="files/engine/scene.gltf"
+          alt="3D Rocket Model"
+          auto-rotate
+          camera-controls
+          shadow-intensity="1"
+          style="width:100%; height:200px; border-radius:4px;">
+        </model-viewer>
       </div>
+      
       <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
         <div style="font-size: 2rem;">💻</div>
         <a href="files/python-scripts.zip" target="_blank">Python Scripts</a>
       </div>
+      
       <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
         <div style="font-size: 2rem;">🔧</div>
         <a href="projects/demo/" target="_blank">Project Demos</a>
