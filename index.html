@@ -1,14 +1,17 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Adria Cammerer Llodra – Mechatronics Engineering Student</title>
+  <title>Adria Cammerer Llodra – Mechatronics</title>
   <meta name="description" content="Mallorcan mechatronics student in Germany passionate about aerospace, automation, signal processing, control systems, and embedded development.">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <!-- 3D model viewer -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <!-- Generative Art Script -->
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
@@ -16,67 +19,65 @@
     <p class="subtitle">Mechatronics • Robotics • Signal Processing • Embedded Systems</p>
   </header>
 
-  <section>
-    <h2>Experience</h2>
-    <ul>
-      <li>
-        <span class="role">Nov 2024 – Present</span>
-        <p>Research Engineer Student at THWS developing LoRaWAN payloads for stratospheric balloons using STM32 and RF modules.</p>
-      </li>
-      <li>
-        <span class="role">Jul 2023 – Jul 2024</span>
-        <p>Engineering Intern at Schienen Güter Logistik – scanned physical documents and automated sorting in Python, eliminating manual processing tasks.</p>
-      </li>
-    </ul>
-  </section>
+  <main>
+    <section aria-labelledby="exp-heading">
+      <h2 id="exp-heading">Experience</h2>
+      <ul>
+        <li>
+          <span class="role">Nov 2024 – Present</span>
+          <p>Research Engineer Student at THWS developing LoRaWAN payloads for stratospheric balloons using STM32 and RF modules.</p>
+        </li>
+        <li>
+          <span class="role">Jul 2023 – Jul 2024</span>
+          <p>Engineering Intern at Schienen Güter Logistik – scanned physical documents and automated sorting in Python, eliminating manual processing tasks.</p>
+        </li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>Projects</h2>
-    <ul>
-      <li>🔗 <strong>LoRaWAN Balloon</strong> <span class="status">(In progress)</span></li>
-      <li>🔗 <strong>Seafloor Detection Sensor</strong> <span class="status">(In progress)</span></li>
-    </ul>
-  </section>
+    <section aria-labelledby="proj-heading">
+      <h2 id="proj-heading">Projects</h2>
+      <ul>
+        <li>🔗 <strong>LoRaWAN Balloon</strong> <span class="status">(In progress)</span></li>
+        <li>🔗 <strong>Seafloor Detection Sensor</strong> <span class="status">(In progress)</span></li>
+      </ul>
+    </section>
 
-  <section>
-    <h2>Showcase</h2>
-    <div class="showcase-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-      
-      <!-- Interactive 3D Model -->
-      <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
-        <div style="font-size:1.2rem; margin-bottom:0.5rem;">🚀 Rocket Model</div>
-        <model-viewer
-          src="files/engine/scene.gltf"
-          alt="3D Rocket Model"
-          auto-rotate
-          camera-controls
-          shadow-intensity="1"
-          style="width:100%; height:200px; border-radius:4px;">
-        </model-viewer>
+    <section aria-labelledby="showcase-heading">
+      <h2 id="showcase-heading">Showcase</h2>
+      <div class="showcase-grid">
+        <!-- 3D Model -->
+        <div class="card">
+          <div class="card-title">🛩️ Rotary Engine</div>
+          <model-viewer
+            src="files/engine/scene.gltf"
+            alt="Rotary engine"
+            auto-rotate
+            camera-controls
+            shadow-intensity="1">
+          </model-viewer>
+        </div>
+        <!-- Generative Art Canvas -->
+        <div class="card">
+          <div class="card-title">💻 Generative Art</div>
+          <canvas id="gen-art"></canvas>
+        </div>
+        <!-- Python Scripts Download -->
+        <div class="card">
+          <div class="card-title">📂 Python Scripts</div>
+          <a href="files/python-scripts.zip" target="_blank" rel="noopener">Download Scripts</a>
+        </div>
       </div>
-      
-      <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
-        <div style="font-size: 2rem;">💻</div>
-        <a href="files/python-scripts.zip" target="_blank">Python Scripts</a>
-      </div>
-      
-      <div class="card" style="background: #1a1f26; padding: 1rem; border-radius: 0.5rem; text-align: center;">
-        <div style="font-size: 2rem;">🔧</div>
-        <a href="projects/demo/" target="_blank">Project Demos</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Interests</h2>
-    <p>Space, aviation, robotics, photography, cooking, and outdoor sports.</p>
-  </section>
+    <section aria-labelledby="int-heading">
+      <h2 id="int-heading">Interests</h2>
+      <p>Space, aviation, robotics, photography, cooking, and outdoor sports.</p>
+    </section>
+  </main>
 
   <footer>
     <h2>Get in Touch</h2>
     <p><a href="mailto:adria.arbiet@gmail.com">adria.arbiet@gmail.com</a></p>
   </footer>
-
-  <script src="script.js" defer></script>
 </body>
 </html>

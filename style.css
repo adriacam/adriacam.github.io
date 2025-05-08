@@ -1,7 +1,6 @@
 /* style.css */
-*,
-*::before,
-*::after {
+/* Base resets */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -17,16 +16,15 @@ body {
   padding: 2rem;
   max-width: 900px;
   margin: auto;
-  /* subtle starfield background */
   background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
+/* Header */
 header {
   text-align: center;
   margin-bottom: 2rem;
 }
-
 h1 {
   font-size: 2.5rem;
   background: linear-gradient(90deg, #8BC34A, #00edff);
@@ -35,26 +33,19 @@ h1 {
   transition: text-shadow 0.3s;
   cursor: pointer;
 }
-
 h1:hover {
-  animation: pulse 1s ease-in-out infinite alternate;
+  text-shadow: 0 0 10px rgba(0,237,255,0.7);
 }
-
-@keyframes pulse {
-  from { text-shadow: 0 0 8px rgba(139,195,74,0.7); }
-  to   { text-shadow: 0 0 20px rgba(0,237,255,0.7); }
-}
-
-p.subtitle {
+.subtitle {
   font-size: 1.1rem;
   color: #8aaebf;
   margin-top: 0.5rem;
 }
 
+/* Sections */
 section {
   margin-bottom: 2.5rem;
 }
-
 h2 {
   font-size: 1.8rem;
   color: #8BC34A;
@@ -64,73 +55,95 @@ h2 {
   transition: text-shadow 0.3s;
   cursor: pointer;
 }
-
 h2:hover {
-  animation: pulse 1s ease-in-out infinite alternate;
+  text-shadow: 0 0 8px rgba(0,237,255,0.7);
 }
 
+/* Lists */
 ul {
   list-style: none;
 }
-
 li {
   margin: 0.75rem 0;
   display: flex;
   align-items: flex-start;
 }
-
-li .role {
+.role {
   font-weight: bold;
-  width: 8rem;
+  width: 10rem;
   color: #00edff;
 }
-
-li p {
-  margin: 0;
-  font-size: 0.95rem;
+p {
   color: #c0cbd6;
 }
 
+/* Status badges */
 .status {
   color: #ffae00;
   margin-left: 0.5rem;
 }
 
-a {
+/* Showcase */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background: #1a1f26;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  color: #00edff;
+  font-size: 1rem;
+}
+/* Ensure model-viewer & canvas fill their cards */
+.card model-viewer,
+.card canvas {
+  display: block;
+  width: 100%;
+  height: 200px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+.card a {
   color: #8BC34A;
   text-decoration: none;
-  position: relative;
+  font-weight: bold;
+}
+.card a:hover {
+  text-decoration: underline;
 }
 
-a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background: #8BC34A;
-  transition: width 0.3s;
-}
-
-a:hover::after {
-  width: 100%;
-}
-
+/* Footer */
 footer {
   text-align: center;
   padding-top: 2rem;
   border-top: 1px solid #2e3b48;
 }
-
 footer a {
-  font-size: 1rem;
   color: #8BC34A;
 }
 
-/* Mobile tweaks */
+/* Responsive */
 @media (max-width: 600px) {
-  body { padding: 1rem; }
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
+  body {
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
 }
