@@ -25,17 +25,38 @@ header {
   text-align: center;
   margin-bottom: 2rem;
 }
+/* style.css */
+
+/* Remove any color/gradient you had on h1 itself */
 h1 {
   font-size: 2.5rem;
-  background: linear-gradient(90deg, #8BC34A, #00edff);
+  cursor: pointer;
+  transition: text-shadow 0.3s;
+}
+
+/* "adria cam" gets a red→orange gradient */
+.name-first {
+  background: linear-gradient(90deg, #ff6200, #ff2a00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: text-shadow 0.3s;
-  cursor: pointer;
 }
-h1:hover {
+
+/* "merer llodra" keeps your green→cyan gradient */
+.name-last {
+  background: linear-gradient(90deg, #4ac382, #00edff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glow on hover, matching each span’s accent */
+h1:hover .name-first {
+  text-shadow: 0 0 10px rgba(255,174,0,0.7);
+}
+h1:hover .name-last {
   text-shadow: 0 0 10px rgba(0,237,255,0.7);
 }
+
+
 .subtitle {
   font-size: 1.1rem;
   color: #8aaebf;
@@ -129,7 +150,7 @@ footer {
   border-top: 1px solid #2e3b48;
 }
 footer a {
-  color: #8BC34A;
+  color: #ffae00;
 }
 
 /* Responsive */
