@@ -143,15 +143,40 @@ p {
   text-decoration: underline;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid #2e3b48;
+/* Footer contact buttons */
+.contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
-footer a {
-  color: #ffae00;
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
 }
+
+.email-btn {
+  background: #8BC34A;
+  color: #0a0f14;
+}
+
+.linkedin-btn {
+  background: #0077B5;
+  color: #ffffff;
+}
+
+.contact-btn:hover {
+  opacity: 0.8;
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {
