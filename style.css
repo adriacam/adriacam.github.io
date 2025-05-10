@@ -49,13 +49,19 @@ h1 {
 }
 
 /* Glow on hover, matching each span’s accent */
-h1:hover .name-first {
+.name-first,
+.name-last {
+  transition: text-shadow 0.25s ease-in-out;
+}
+
+header:hover .name-first {
   text-shadow: 0 0 10px rgba(255,174,0,0.7);
 }
-h1:hover .name-last {
+header:hover .name-last {
   text-shadow: 0 0 10px rgba(0,237,255,0.7);
 }
 
+/* Subtitle */
 
 .subtitle {
   font-size: 1.1rem;
@@ -76,9 +82,11 @@ h2 {
   transition: text-shadow 0.3s;
   cursor: pointer;
 }
-h2:hover {
-  text-shadow: 0 0 8px rgba(0,237,255,0.7);
+/* Glow section title when hovering over the entire section */
+section:hover h2 {
+  text-shadow: 0 0 8px rgba(0, 237, 255, 0.7);
 }
+
 
 /* Lists */
 ul {
