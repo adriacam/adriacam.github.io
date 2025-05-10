@@ -4,11 +4,35 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
+  // Simulation parameters
   const cellSize = 5;
-  let gridWidth, gridHeight;
-  let grid, ant, oldX, oldY, animId;
+  let gridWidth, gridHeight, grid, ant, oldX, oldY, animId;
 
-  // Resize canvas to match CSS size and recalc grid
+  // Colors pulled from CSS
+  let bgAlt;
+  let paletteCols = [];
+  let antColor, traceColor;
+
+  // Read CSS variables into JS
+  function updateColorsFromCSS() {
+    const styles = getComputedStyle(document.documentElement);
+    bgAlt = styles.getPropertyValue('--bg-alt').trim() || '#005f73';
+    paletteCols = [
+      styles.getPropertyValue('--accent-primary').trim(),
+      styles.getPropertyValue('--accent-secondary').trim(),
+      styles.getPropertyValue('--highlight').trim(),
+      styles.getPropertyValue('--linkedin-btn').trim()
+    ].filter(c => c);
+  }
+
+  // Pick two distinct random colors for this run
+  function pickColors() {
+    antColor   = paletteCols[Math.floor(Math.random() * paletteCols.length)];
+    const others = paletteCols.filter(c => c !== antColor);
+    traceColor = others[Math.floor(Math.random() * others.length)];
+  }
+
+  // Resize canvas & recalc grid size
   function resizeCanvas() {
     canvas.width  = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
@@ -16,67 +40,57 @@
     gridHeight = Math.floor(canvas.height / cellSize);
   }
 
-  window.addEventListener('resize', () => {
-    cancelAnimationFrame(animId);
-    resizeCanvas();
-    init();
-    animate();
-  });
-
-  // Initialize grid & ant, clear canvas
+  // Initialize/reset simulation
   function init() {
     resizeCanvas();
+    updateColorsFromCSS();
+    pickColors();
     grid = Array.from({ length: gridHeight }, () => Array(gridWidth).fill(false));
-    ant = {
-      x: Math.floor(gridWidth  / 2),
-      y: Math.floor(gridHeight / 2),
-      dir: 0  // 0=up,1=right,2=down,3=left
-    };
-    oldX = ant.x;
-    oldY = ant.y;
-    ctx.fillStyle = '#1a1f26';
+    ant = { x: Math.floor(gridWidth/2), y: Math.floor(gridHeight/2), dir: 0 };
+    oldX = ant.x; oldY = ant.y;
+
+    // fill background to match your card bg
+    ctx.fillStyle = bgAlt;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // draw initial ant head
     drawAnt(oldX, oldY);
   }
 
-  function drawCell(x, y) {
-    ctx.fillStyle = grid[y][x] ? '#1a1f26' : '#8BC34A';
-    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+  // Draw helpers
+  function drawCell(x,y) {
+    ctx.fillStyle = grid[y][x] ? traceColor : bgAlt;
+    ctx.fillRect(x*cellSize, y*cellSize, cellSize, cellSize);
   }
 
-  function drawAnt(x, y) {
-    ctx.fillStyle = '#00edff';
-    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+  function drawAnt(x,y) {
+    ctx.fillStyle = antColor;
+    ctx.fillRect(x*cellSize, y*cellSize, cellSize, cellSize);
   }
 
-  // Perform one Langton’s Ant step
+  // One Langton’s Ant step
   function step() {
-    // Erase old ant by redrawing its cell
     drawCell(oldX, oldY);
 
-    // Toggle & turn on current cell
     const { x, y } = ant;
     const state = grid[y][x];
     ant.dir = state ? (ant.dir + 3) % 4 : (ant.dir + 1) % 4;
     grid[y][x] = !state;
     drawCell(x, y);
 
-    // Move forward
     if (ant.dir === 0) ant.y--;
     else if (ant.dir === 1) ant.x++;
     else if (ant.dir === 2) ant.y++;
     else ant.x--;
 
-    // Wrap edges
-    if (ant.x < 0)             ant.x = gridWidth - 1;
-    if (ant.x >= gridWidth)   ant.x = 0;
-    if (ant.y < 0)             ant.y = gridHeight - 1;
-    if (ant.y >= gridHeight)  ant.y = 0;
+    // wrap edges
+    if (ant.x < 0)          ant.x = gridWidth - 1;
+    if (ant.x >= gridWidth) ant.x = 0;
+    if (ant.y < 0)          ant.y = gridHeight - 1;
+    if (ant.y >= gridHeight)ant.y = 0;
 
-    // Draw ant at new pos
     drawAnt(ant.x, ant.y);
-    oldX = ant.x;
-    oldY = ant.y;
+    oldX = ant.x; oldY = ant.y;
   }
 
   // Animation loop
@@ -85,14 +99,38 @@
     animId = requestAnimationFrame(animate);
   }
 
-  // Start simulation
-  init();
-  animate();
-
-  // Click to reset & restart
-  canvas.addEventListener('click', () => {
+  // Full reset (stop → init → animate)
+  function reset() {
     cancelAnimationFrame(animId);
     init();
     animate();
+  }
+
+  // Event bindings
+  window.addEventListener('resize', reset);
+  canvas.addEventListener('click', reset);
+
+  // Day/Night toggle resets the ant too
+  const toggleBtn = document.getElementById('theme-toggle');
+  const rootEl    = document.documentElement;
+
+  // Restore saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    rootEl.setAttribute('data-theme','light');
+    toggleBtn.textContent = '☀️';
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    const next = rootEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    rootEl.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggleBtn.textContent = next === 'light' ? '☀️' : '🌙';
+
+    reset();
   });
+
+  // Kick things off
+  init();
+  animate();
 })();

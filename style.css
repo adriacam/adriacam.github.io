@@ -1,5 +1,36 @@
 /* style.css */
-/* Base resets */
+/*——————————————————————————————————————————————*/
+/* CSS Variables & Theme Overrides */
+:root {
+  /* Dark theme defaults */
+  --bg-main:         #001219;
+  --bg-alt:          #001A24;
+  --text-main:       #e9d8a6;
+  --text-secondary:  #94d2bd;
+  --accent-primary:  #ee9b00;
+  --accent-secondary:#ca6702;
+  --highlight:       #bb3e03;
+  --linkedin-btn:    #0a9396;
+
+  --font-mono:       'Roboto Mono', monospace;
+  --max-width:       900px;
+  --body-padding:    2rem;
+  --card-radius:     0.5rem;
+  --card-shadow:     0 8px 16px rgba(0,0,0,0.3);
+  --pop-scale:       1.05;
+}
+
+/* Light‐theme overrides */
+html[data-theme="light"] {
+  --bg-main:        #ffffff;
+  --bg-alt:         #f5f5f5;
+  --text-main:      #001219;
+  --text-secondary: #758494;
+  /* accents remain the same */
+}
+
+/*——————————————————————————————————————————————*/
+/* Base reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -7,88 +38,85 @@
 }
 
 html {
-  background: #0a0f14;
-  color: #e0e6ed;
-  font-family: 'Roboto Mono', monospace;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-mono);
 }
 
 body {
-  padding: 2rem;
-  max-width: 900px;
+  max-width: var(--max-width);
   margin: auto;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
+  padding: var(--body-padding);
 }
 
-/* Header */
+/*——————————————————————————————————————————————*/
+/* Header & Theme Toggle */
 header {
   text-align: center;
   margin-bottom: 2rem;
+  position: relative;
 }
-/* style.css */
-
-/* Remove any color/gradient you had on h1 itself */
 h1 {
   font-size: 2.5rem;
   cursor: pointer;
-  transition: text-shadow 0.3s;
+  transition: text-shadow 0.3s ease-in-out;
 }
-
-/* "adria cam" gets a red→orange gradient */
 .name-first {
-  background: linear-gradient(90deg, #ff6200, #ff2a00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-primary);
+  transition: text-shadow 0.3s ease-in-out;
 }
-
-/* "merer llodra" keeps your green→cyan gradient */
 .name-last {
-  background: linear-gradient(90deg, #4ac382, #00edff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-secondary);
+  transition: text-shadow 0.3s ease-in-out;
 }
-
-/* Glow on hover, matching each span’s accent */
-.name-first,
-.name-last {
-  transition: text-shadow 0.25s ease-in-out;
-}
-
-header:hover .name-first {
-  text-shadow: 0 0 10px rgba(255,174,0,0.7);
-}
+header:hover .name-first,
 header:hover .name-last {
-  text-shadow: 0 0 10px rgba(0,237,255,0.7);
+  text-shadow: 0 0 8px var(--highlight);
 }
 
-/* Subtitle */
+#theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+#theme-toggle:hover {
+  color: var(--accent-primary);
+  transform: scale(var(--pop-scale));
+}
 
 .subtitle {
   font-size: 1.1rem;
-  color: #8aaebf;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
 }
 
-/* Sections */
+/*——————————————————————————————————————————————*/
+/* Sections & Headings */
 section {
   margin-bottom: 2.5rem;
 }
 h2 {
   font-size: 1.8rem;
-  color: #8BC34A;
-  border-bottom: 2px solid #2e3b48;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--text-secondary);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  transition: text-shadow 0.3s;
   cursor: pointer;
+  transition: text-shadow 0.3s ease-in-out;
 }
-/* Glow section title when hovering over the entire section */
-section:hover h2 {
-  text-shadow: 0 0 8px rgba(0, 237, 255, 0.7);
+section:hover h2,
+footer:hover h2 {
+  text-shadow: 0 0 8px var(--highlight);
 }
 
-
-/* Lists */
+/*——————————————————————————————————————————————*/
+/* Lists & Roles */
 ul {
   list-style: none;
 }
@@ -100,58 +128,71 @@ li {
 .role {
   font-weight: bold;
   width: 10rem;
-  color: #00edff;
+  color: var(--accent-primary);
 }
-p {
-  color: #c0cbd6;
+li p {
+  color: var(--text-main);
 }
 
-/* Status badges */
 .status {
-  color: #ffae00;
+  color: var(--accent-secondary);
   margin-left: 0.5rem;
 }
 
-/* Showcase */
+/*——————————————————————————————————————————————*/
+/* Showcase Cards */
 .showcase-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
 }
 .card {
-  background: #1a1f26;
+  background-color: var(--bg-alt);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--card-radius);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow);
 }
 .card-title {
   font-weight: bold;
-  margin-bottom: 0.75rem;
-  color: #00edff;
   font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
 }
-/* Ensure model-viewer & canvas fill their cards */
 .card model-viewer,
 .card canvas {
-  display: block;
   width: 100%;
   height: 200px;
   border-radius: 4px;
   object-fit: cover;
 }
-.card a {
-  color: #8BC34A;
+
+/*——————————————————————————————————————————————*/
+/* Links & Buttons */
+a {
+  color: var(--accent-primary);
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
-.card a:hover {
-  text-decoration: underline;
+a:hover {
+  color: var(--accent-secondary);
+  transform: scale(var(--pop-scale));
 }
 
-/* Footer contact buttons */
+footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--text-secondary);
+}
+
 .contact-links {
   display: flex;
   justify-content: center;
@@ -159,45 +200,33 @@ p {
   gap: 1rem;
   margin-top: 0.5rem;
 }
-
 .contact-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--card-radius);
   font-weight: bold;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  background-color: var(--accent-primary);
+  color: var(--bg-main);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-.email-btn {
-  background: #8BC34A;
-  color: #0a0f14;
+.contact-btn.linkedin-btn {
+  background-color: var(--linkedin-btn);
+  color: var(--text-main);
 }
-
-.linkedin-btn {
-  background: #0077B5;
-  color: #ffffff;
-}
-
 .contact-btn:hover {
-  opacity: 0.8;
+  background-color: var(--highlight);
+  transform: scale(var(--pop-scale));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-
+/*——————————————————————————————————————————————*/
 /* Responsive */
 @media (max-width: 600px) {
-  body {
-    padding: 1rem;
-  }
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-  .showcase-grid {
-    grid-template-columns: 1fr;
-  }
+  body { padding: 1rem; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .showcase-grid { grid-template-columns: 1fr; }
 }
