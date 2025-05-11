@@ -3,27 +3,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Adria Cammerer Llodra – Mechatronics</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Adria Cammerer Llodra – Mechatronics & Sustainable Tech</title>
   <meta name="description" content="Mallorcan mechatronics student in Germany passionate about aerospace, automation, signal processing, control systems, and embedded development.">
+  
+  <!-- Core CSS -->
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="/favicon.ico" type="image/x-icon">
+
   <!-- 3D model viewer -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <!-- Generative Art Script -->
+  <!-- Main JS -->
   <script src="script.js" defer></script>
 </head>
 <body>
-<header>
-  <h1>
-    <span class="name-last">(</span><span class="name-first">adria . cam</adria></span><span class="name-last">merer llodra)</span>
-  </h1>
-  <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
-  <p class="subtitle">Mechatronics • Robotics • Signal Processing • Embedded Systems</p>
-</header>
 
+  <header>
+    <h1>
+      <span class="name-first">adrià.cam</span><span class="name-last">merer.llodrà</span>
+    </h1>
+    <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    <p class="subtitle">Mechatronics • Robotics • Signal Processing • Embedded Systems</p>
+  </header>
 
   <main>
     <section aria-labelledby="exp-heading">
@@ -45,15 +46,14 @@
       <ul>
         <li>🔗 <strong>LoRaWAN Balloon</strong> <span class="status">(In progress)</span></li>
         <li>🔗 <strong>Seafloor Detection Sensor</strong> <span class="status">(In progress)</span></li>
-        <li>🔗 <strong>Ball on a beam stabilization</strong> <span class="status">(In progress)</span></li>
-      
+        <li>🔗 <strong>Ball on a Beam Stabilization</strong> <span class="status">(In progress)</span></li>
       </ul>
     </section>
 
     <section aria-labelledby="showcase-heading">
       <h2 id="showcase-heading">Showcase</h2>
       <div class="showcase-grid">
-        <!-- 3D Model -->
+        <!-- 3D Model Card -->
         <div class="card">
           <div class="card-title">🛩️ Rotary Engine</div>
           <model-viewer
@@ -64,15 +64,15 @@
             shadow-intensity="1">
           </model-viewer>
         </div>
-        <!-- Generative Art Canvas -->
+        <!-- Langton’s Ant Card -->
         <div class="card">
-          <div class="card-title">🐜 Langton's Ant</div>
-          <canvas id="gen-art"></canvas>
+          <div class="card-title">🐜 Langton’s Ant</div>
+          <canvas id="gen-art" aria-label="Langton’s Ant Simulation"></canvas>
         </div>
-        <!-- Python Scripts Download -->
+        <!-- Python Scripts Card -->
         <div class="card">
-          <div class="card-title">📂 (Loading...)</div>
-          <a href="" target="_blank" rel="noopener"></a>
+          <div class="card-title">📂 Python Scripts</div>
+          <a href="files/python-scripts.zip" target="_blank" rel="noopener">Download ZIP</a>
         </div>
       </div>
     </section>
@@ -83,7 +83,7 @@
     </section>
   </main>
 
-    <footer>
+  <footer>
     <h2>Get in Touch</h2>
     <div class="contact-links">
       <a href="mailto:adria.arbiet@gmail.com" class="contact-btn email-btn">
