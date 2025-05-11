@@ -69,11 +69,23 @@
           <div class="card-title">🐜 Langton’s Ant</div>
           <canvas id="gen-art" aria-label="Langton’s Ant Simulation"></canvas>
         </div>
-        <!-- Python Scripts Card -->
-        <div class="card">
-          <div class="card-title">📂 Loading...</div>
-          <a href="" target="_blank" rel="noopener"></a>
-        </div>
+        <!-- ── Ball-on-Beam Stabilization Demo ── -->
+          <div class="card ss-card">
+            <div class="card-title">⚖️ Full-state feedback controller</div>
+            <canvas id="ss-canvas" aria-label="Ball Position vs Time"></canvas>
+            <label for="ss-ref" class="slider-label">
+              Set-point (m):
+              <input
+                id="ss-ref"
+                type="range"
+                min="-0.8"
+                max="0.8"
+                step="0.01"
+                value="0"
+                class="setpoint-slider"
+              />
+            </label>
+          </div>
       </div>
     </section>
 
