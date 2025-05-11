@@ -153,34 +153,61 @@
     // Steady-State Ball-on-Beam Demo
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('ss-canvas');
-  const slider = document.getElementById('ss-ref');
-
+  
   class StateSpaceDemo {
     constructor(canvas, dt, A, B, K) {
       this.canvas = canvas;
       this.ctx    = canvas.getContext('2d');
       this.dt     = dt;
-      this.A = A; this.B = B; this.K = K;
-      this.r = 0;
-      this.maxPts = 400;
+      [this.A, this.B, this.K] = [A, B, K];
+      this.r       = 0;
+      this.maxPts  = 400;
+      this.dragging = false;
 
       window.addEventListener('resize', () => this._resize());
       this._resize();
 
-      slider.addEventListener('input', e => {
-        this.r = parseFloat(e.target.value);
-        this.start();
-      });
+      // pointer events to drag the set-point marker
+      canvas.addEventListener('pointerdown', this._onDown.bind(this));
+      window.addEventListener('pointermove', this._onMove.bind(this));
+      window.addEventListener('pointerup',   this._onUp.bind(this));
     }
 
     _resize() {
       this.canvas.width  = this.canvas.clientWidth;
       this.canvas.height = this.canvas.clientHeight;
+      this._halfH = this.canvas.height / 2;
     }
 
-    _mv(mat, vec) { return mat.map(row => row.reduce((s,v,i)=>s+v*vec[i], 0)); }
-    _add(a, b)    { return a.map((v,i)=>v + b[i]); }
-    _sv(s, v)     { return v.map(x => s * x); }
+    _onDown(e) {
+      const rect = this.canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      const markerX = 10, markerY = this._halfH - this.r * this._halfH;
+      const dx = x - markerX, dy = y - markerY;
+      if (dx*dx + dy*dy < 8*8) { // 8px radius hit
+        this.dragging = true;
+        this.start();
+      }
+    }
+
+    _onMove(e) {
+      if (!this.dragging) return;
+      const rect = this.canvas.getBoundingClientRect();
+      const y = e.clientY - rect.top;
+      // compute r from y: y = halfH - r*halfH  ⇒  r = (halfH - y)/halfH
+      let r = (this._halfH - y) / this._halfH;
+      r = Math.max(-0.9, Math.min(0.9, r));
+      this.r = r;
+      this.start();
+    }
+
+    _onUp() {
+      this.dragging = false;
+    }
+
+    _mv(mat, vec) { return mat.map(r => r.reduce((s,v,i)=>s+v*vec[i],0)); }
+    _add(a,b)     { return a.map((v,i)=>v+b[i]); }
+    _sv(s,v)      { return v.map(x=>s*x); }
 
     init() {
       this.history = [];
@@ -188,67 +215,54 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     step() {
-      // if graph has filled, restart
       if (this.history.length >= this.maxPts) this.init();
-        
-      // compute control
-      const err = [this.x[0] - this.r, this.x[1], this.x[2], this.x[3]];
-      const u   = -this.K.reduce((s,ki,i) => s + ki*err[i], 0);
-
-      const Ax  = this._mv(this.A, this.x);
-      const Bu  = this._sv(u, this.B.flat());
-      const xdot= this._add(Ax, Bu);
-      this.x    = this._add(this.x, this._sv(this.dt, xdot));
-
+      const err = [this.x[0] - this.r, ...this.x.slice(1)];
+      const u   = -this.K.reduce((s,ki,i)=>s+ki*err[i],0);
+      const Ax = this._mv(this.A, this.x);
+      const Bu = this._sv(u, this.B.flat());
+      this.x = this._add(this.x, this._sv(this.dt, this._add(Ax,Bu)));
       this.history.push(this.x[0]);
-      if (this.history.length > this.maxPts) this.history.shift();
     }
 
     draw() {
-      const ctx = this.ctx, 
-      W = this.canvas.width, 
-      H = this.canvas.height;
-
+      const ctx = this.ctx, W = this.canvas.width, H = this.canvas.height;
       ctx.clearRect(0,0,W,H);
 
+      const yAxisX = 10, halfH = this._halfH;
+
       // y-axis
-      const axisC = getComputedStyle(document.documentElement)
-                       .getPropertyValue('--text-secondary').trim();
-      ctx.strokeStyle = axisC;
-      ctx.lineWidth   = 1;
-      ctx.setLineDash([]);
-      ctx.beginPath();
-      ctx.moveTo(10, 0);
-      ctx.lineTo(10, H);
-      ctx.stroke();
+      ctx.strokeStyle = getComputedStyle(document.documentElement)
+                         .getPropertyValue('--text-secondary').trim();
+      ctx.lineWidth = 1; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(yAxisX,0); ctx.lineTo(yAxisX,H); ctx.stroke();
 
       // zero-line
-      ctx.beginPath();
-      ctx.moveTo(10, H/2);
-      ctx.lineTo(W, H/2);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(yAxisX,halfH); ctx.lineTo(W,halfH); ctx.stroke();
 
       // set-point line
-      const spY = H/2 - this.r * (H/2);
-      ctx.strokeStyle = getComputedStyle(document.documentElement)
+      const spY = halfH - this.r*halfH;
+      const spC = getComputedStyle(document.documentElement)
                          .getPropertyValue('--text-main').trim();
+      ctx.strokeStyle = spC;
       ctx.setLineDash([2,2]);
-      ctx.beginPath();
-      ctx.moveTo(10, spY);
-      ctx.lineTo(W, spY);
-      ctx.stroke();
-      
+      ctx.beginPath(); ctx.moveTo(yAxisX,spY); ctx.lineTo(W,spY); ctx.stroke();
+
+      // draggable marker dot
+      ctx.setLineDash([]);
+      ctx.fillStyle = spC;
+      ctx.beginPath(); ctx.arc(yAxisX, spY, 6, 0,2*Math.PI); ctx.fill();
+
       // ball trace
       const ballC = getComputedStyle(document.documentElement)
                          .getPropertyValue('--accent-primary').trim();
       ctx.strokeStyle = ballC;
       ctx.setLineDash([]);
       ctx.beginPath();
-      this.history.forEach((y,i) => {
-        const x  = 10 + (i/this.maxPts) * (W - 10);
-        const v  = Math.max(-1, Math.min(1, y));
-        const py = H/2 - v * (H/2);
-        i === 0 ? ctx.moveTo(x, py) : ctx.lineTo(x, py);
+      this.history.forEach((y,i)=>{
+        const x = yAxisX + (i/this.maxPts)*(W-yAxisX);
+        const v = Math.max(-1,Math.min(1,y));
+        const py = halfH - v*halfH;
+        i===0 ? ctx.moveTo(x,py) : ctx.lineTo(x,py);
       });
       ctx.stroke();
     }
@@ -256,7 +270,7 @@ window.addEventListener('DOMContentLoaded', () => {
     animate() {
       this.step();
       this.draw();
-      this.raf = requestAnimationFrame(() => this.animate());
+      this.raf = requestAnimationFrame(()=>this.animate());
     }
 
     start() {
@@ -268,12 +282,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const L = 0.5, Jb = 0.02;
   const A = [
-    [0, 1,     0, 0],
-    [0, 0, 9.81/L, 0],
-    [0, 0,     0, 1],
-    [0, 0,     0, 0]
+    [0, 1,      0,  0],
+    [0, 0, 9.81/L,  0],
+    [0, 0,  0,      1],
+    [0, 0,  0,      0]
   ];
-  const B = [[0],[0],[0],[1/Jb]];
+  const B = [ [0],
+              [0],
+              [0],
+              [1/Jb]];
   const K = [0.0826, 0.1101, 1.0800, 0.2400];
 
   new StateSpaceDemo(canvas, 0.01, A, B, K).start();
