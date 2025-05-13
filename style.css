@@ -140,20 +140,32 @@ li p { color: var(--text-main); }
   gap: 1rem;
 }
 .card {
-  background-color: var(--bg-alt);
-  padding: 1rem;
-  border-radius: var(--card-radius);
-  text-align: center;
+  background: var(--bg-alt);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  perspective: 800px;
+}
+
+/* Uniform inset inside every card */
+.card .card-body {
+  padding: 0.75rem;        /* same on all four sides */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  perspective: 800px;
 }
-.card:hover {
-  transform: rotateX(5deg) rotateY(5deg) translateY(-5px);
-  box-shadow: var(--card-shadow);
+/* Title spacing */
+.card .card-body > .card-title {
+  text-align: center;
+  margin: 0 0 0.5rem 0;
 }
+
+/* only flip the direct children of .showcase-grid */
+.showcase-grid > .card:hover {
+   transform: rotateX(5deg) rotateY(5deg) translateY(-5px);
+   box-shadow: var(--card-shadow);
+ }
 .card-title {
   font-weight: bold;
   margin-bottom: 0.75rem;
@@ -166,6 +178,15 @@ li p { color: var(--text-main); }
   background: var(--bg);
   display: block;
 }
+/* Force 200px height and full width for visuals */
+.card .card-body model-viewer,
+.card .card-body canvas {
+  display: block;
+  width: 100%;
+  height: 200px;
+  margin: 0;
+}
+
 /* Steady-State Ball-on-Beam Styles */
 .slider-label {
   display: block;
@@ -182,6 +203,40 @@ li p { color: var(--text-main); }
   background: var(--bg);
   display: block;
   touch-action: none; /* allow dragging on mobile */
+}
+.card.has-info { 
+  position: relative; overflow: hidden; }
+
+/* the ℹ️ icon */
+.card .info-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* hidden info panel */
+.card .info-panel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-alt);
+  color: var(--text-main);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* show panel on hover of icon or panel */
+.card .info-icon:hover ~ .info-panel,
+.card .info-panel:hover {
+  display: flex;
 }
 
 /*——————————————————————————————————————————————*/
@@ -241,3 +296,6 @@ footer {
   h2   { font-size: 1.5rem; }
   .showcase-grid { grid-template-columns: 1fr; }
 }
+
+
+

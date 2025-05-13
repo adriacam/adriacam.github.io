@@ -55,25 +55,45 @@
       <div class="showcase-grid">
         <!-- 3D Model Card -->
         <div class="card">
-          <div class="card-title">🛩️ Rotary Engine</div>
-          <model-viewer
-            src="files/engine/scene.gltf"
-            alt="Rotary engine"
-            auto-rotate
-            camera-controls
-            shadow-intensity="1">
-          </model-viewer>
+          <div class="info-icon">ℹ️</div>
+          <div class="info-panel">
+            <p>This is a rotary engine, an early type of combustion engine dessigned with an odd number of cylinders.</p>
+          </div>
+          <div class="card-body">
+            <div class="card-title">🛩️ Rotary Engine</div>
+            <model-viewer
+              src="files/engine/scene.gltf"
+              alt="Rotary engine"
+              auto-rotate
+              camera-controls
+              shadow-intensity="1">
+            </model-viewer>
+          </div>
         </div>
+
         <!-- Langton’s Ant Card -->
         <div class="card">
-          <div class="card-title">🐜 Langton’s Ant</div>
-          <canvas id="gen-art" aria-label="Langton’s Ant Simulation"></canvas>
+          <div class="info-icon">ℹ️</div>
+          <div class="info-panel">
+            <p>This is a Langton's Ant, a 2D Turing machine. When a cell is coloured, it turns right. When is not painted, it turns left.</p>
+          </div>
+          <div class="card-body">
+            <div class="card-title">🐜 Langton’s Ant</div>
+            <canvas id="gen-art" aria-label="Langton’s Ant Simulation"></canvas>
+          </div>
         </div>
-        <!-- ── Ball-on-Beam Stabilization Demo ── -->
-          <div class="card ss-card">
-            <div class="card-title">⚖️ Full-state feedback controller</div>
+
+        <!-- Full-State Feedback Controller Card -->
+        <div class="card">
+          <div class="info-icon">ℹ️</div>
+          <div class="info-panel">
+            <p>This is a full-state feedback controller, the controllability matrix was calculate with Ackermann's formula using the following python script:<a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/python">Github</a>.</p>
+          </div>
+          <div class="card-body">
+            <div class="card-title">⚖️ Full-State Feedback Controller</div>
             <canvas id="ss-canvas" aria-label="Ball Position vs Time"></canvas>
           </div>
+        </div>
       </div>
     </section>
 
@@ -89,7 +109,7 @@
       <a href="mailto:adria.arbiet@gmail.com" class="contact-btn email-btn">
         ✉️ adria.arbiet@gmail.com
       </a>
-      <a href="https://www.linkedin.com/in/adri%C3%A0-cammerer-llodr%C3%A0-8a86802a1/" class="contact-btn linkedin-btn" target="_blank" rel="noopener">
+      <a href="https://www.linkedin.com/in/adriacam/" class="contact-btn linkedin-btn" target="_blank" rel="noopener">
         🔗 LinkedIn
       </a>
     </div>
