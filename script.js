@@ -1,130 +1,6 @@
 // script.js
 (() => {
-  /**
-   * Langton’s Ant simulation with randomized start direction.
-   */
-  class LangtonsAnt {
-    /**
-     * @param {HTMLCanvasElement} canvas
-     * @param {number} cellSize
-     */
-    constructor(canvas, cellSize = 5) {
-      this.canvas = canvas;
-      this.ctx    = canvas.getContext('2d');
-      this.cellSize = cellSize;
-      this.grid = [];
-      this.ant = { x:0, y:0, dir:0 };
-      this.old = { x:0, y:0 };
-      this.colors = { bg:'', ant:'', trace:'' };
-
-      // reset triggers
-      canvas.addEventListener('click', ()=> this.reset());
-      window.addEventListener('resize', ()=> this.reset());
-    }
-
-    /** Pull CSS vars (bg-alt + palette). */
-    _updateColors() {
-      const s = getComputedStyle(document.documentElement);
-      const p = [
-        s.getPropertyValue('--accent-primary').trim(),
-        s.getPropertyValue('--accent-secondary').trim(),
-        s.getPropertyValue('--highlight').trim(),
-        s.getPropertyValue('--linkedin-btn').trim()
-      ].filter(Boolean);
-      this.colors.bg    = s.getPropertyValue('--bg-alt').trim();
-      // pick head + trace
-      this.colors.ant   = p[Math.floor(Math.random()*p.length)];
-      this.colors.trace = p.filter(c=>c!==this.colors.ant)[
-        Math.floor(Math.random()*(p.length-1))
-      ];
-    }
-
-    /** Resize & compute grid. */
-    _resize() {
-      this.canvas.width  = this.canvas.clientWidth;
-      this.canvas.height = this.canvas.clientHeight;
-      this.cols = Math.floor(this.canvas.width  / this.cellSize);
-      this.rows = Math.floor(this.canvas.height / this.cellSize);
-    }
-
-    /** Init grid, ant position & direction, clear. */
-    init() {
-      this._resize();
-      this._updateColors();
-
-      this.grid = Array.from({length:this.rows},
-        ()=>Array(this.cols).fill(false)
-      );
-
-      // center + random dir (0=N,1=E,2=S,3=W)
-      this.ant.x = Math.floor(this.cols/2);
-      this.ant.y = Math.floor(this.rows/2);
-      this.ant.dir = Math.floor(Math.random()*4);
-      this.old = {...this.ant};
-
-      // clear to bg
-      this.ctx.fillStyle = this.colors.bg;
-      this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
-      // draw initial head
-      this._drawAnt(this.old.x,this.old.y);
-    }
-
-    _drawCell(x,y){
-      this.ctx.fillStyle = this.grid[y][x]
-        ? this.colors.trace
-        : this.colors.bg;
-      this.ctx.fillRect(
-        x*this.cellSize,y*this.cellSize,
-        this.cellSize,this.cellSize
-      );
-    }
-
-    _drawAnt(x,y){
-      this.ctx.fillStyle = this.colors.ant;
-      this.ctx.fillRect(
-        x*this.cellSize,y*this.cellSize,
-        this.cellSize,this.cellSize
-      );
-    }
-
-    /** One step of Langton’s Ant. */
-    step(){
-      this._drawCell(this.old.x,this.old.y);
-
-      const {x,y,dir} = this.ant;
-      const s = this.grid[y][x];
-      this.ant.dir = s ? (dir+3)%4 : (dir+1)%4;
-      this.grid[y][x] = !s;
-      this._drawCell(x,y);
-
-      if     (this.ant.dir===0) this.ant.y--;
-      else if(this.ant.dir===1) this.ant.x++;
-      else if(this.ant.dir===2) this.ant.y++;
-      else                       this.ant.x--;
-
-      // wrap
-      if(this.ant.x<0)           this.ant.x=this.cols-1;
-      if(this.ant.x>=this.cols)  this.ant.x=0;
-      if(this.ant.y<0)           this.ant.y=this.rows-1;
-      if(this.ant.y>=this.rows)  this.ant.y=0;
-
-      this._drawAnt(this.ant.x,this.ant.y);
-      this.old={...this.ant};
-    }
-
-    /** Animation loop. */
-    animate(){
-      this.raf = requestAnimationFrame(()=>{
-        this.step(); this.animate();
-      });
-    }
-    pause(){ cancelAnimationFrame(this.raf) }
-    reset(){
-      this.pause(); this.init(); this.animate();
-    }
-  }
-
-  // Day/Night toggle
+   // Day/Night toggle
   const btn = document.getElementById('theme-toggle');
   const root = document.documentElement;
   const saved = localStorage.getItem('theme');
@@ -139,13 +15,180 @@
     root.dataset.theme = next;
     localStorage.setItem('theme',next);
     btn.textContent = next==='light'?'☀️':'🌙';
-    antSim.reset();
   });
+// Genetic Rocket-to-Moon Simulation
+window.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('rocket-canvas');
+  const ctx    = canvas.getContext('2d');
+  const POP       = 10;
+  const LIFESPAN  = 200;
+  const MUTATION  = 0.2;
 
-  // Launch
-  const antCanvas = document.getElementById('gen-art');
-  const antSim = new LangtonsAnt(antCanvas,5);
-  antSim.reset();
+  // CSS-variable colors
+  const root       = getComputedStyle(document.documentElement);
+  const COLOR_MOON = root.getPropertyValue('--text-secondary').trim();
+  const COLOR_MSG  = root.getPropertyValue('--highlight').trim();
+  const ROCKET_COLORS = [
+    root.getPropertyValue('--accent-primary').trim(),
+    root.getPropertyValue('--accent-secondary').trim(),
+    root.getPropertyValue('--text-main').trim(),
+    root.getPropertyValue('--text-secondary').trim(),
+    root.getPropertyValue('--highlight').trim()
+  ];
+
+  let W, H, generation, rockets, frame, moon, moonHitRad;
+
+  class Rocket {
+    constructor(brain) {
+      this.pos = { x: W/2, y: H - 20 };
+      this.vel = { x: 0,   y: 0   };
+      this.brain    = brain ? brain.slice() : Array.from({length:LIFESPAN}, randomAccel);
+      this.reached  = false;
+      this.trail    = [];
+      this.fitness  = 0;
+    }
+    step(stepIndex) {
+      if (this.reached) return;
+      const a = this.brain[stepIndex];
+      this.vel.x += a.x;
+      this.vel.y += a.y;
+      this.pos.x += this.vel.x;
+      this.pos.y += this.vel.y;
+      this.trail.push({ x: this.pos.x, y: this.pos.y });
+
+      // precise hit-check against emoji radius
+      const dx = this.pos.x - moon.x;
+      const dy = this.pos.y - moon.y;
+      if (Math.hypot(dx, dy) < moonHitRad) {
+        this.reached = true;
+      }
+    }
+    draw(color) {
+      // draw trail
+      ctx.strokeStyle = color;
+      ctx.beginPath();
+      this.trail.forEach((p, i) =>
+        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)
+      );
+      ctx.stroke();
+
+      // draw rocket emoji
+      ctx.font = '16px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = color;
+      ctx.fillText('🚀', this.pos.x, this.pos.y);
+    }
+    calcFitness() {
+      const d = Math.hypot(this.pos.x - moon.x, this.pos.y - moon.y);
+      this.fitness = this.reached ? 1e6 / generation : 1 / (d * d);
+    }
+    clone() {
+      return new Rocket(this.brain);
+    }
+    mutate() {
+      this.brain = this.brain.map(a =>
+        Math.random() < MUTATION ? randomAccel() : a
+      );
+    }
+  }
+
+  function randomAccel() {
+    return {
+      x: (Math.random() * 2 - 1) * 0.1,
+      y: (Math.random() * 2 - 1) * 0.1
+    };
+  }
+
+  function reset() {
+    // resize & update W,H
+    canvas.width  = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    W = canvas.width;
+    H = canvas.height;
+
+    // measure moon emoji radius
+    ctx.font = '20px serif';
+    const m = ctx.measureText('🌕');
+    // use actual bounding ascent if available, else half width
+    moonHitRad = m.actualBoundingBoxAscent || (m.width / 2);
+
+    // init sim state
+    generation = 0;
+    frame      = 0;
+    rockets    = Array.from({length:POP}, () => new Rocket());
+    newMoon();
+
+    // clear message
+    document.getElementById('rocket-msg').textContent = '';
+  }
+
+  function newMoon() {
+    moon = {
+      x: 20 + Math.random() * (W - 40),
+      y: 20 + Math.random() * (H/2)
+    };
+  }
+
+  function nextGen() {
+  rockets.forEach(r => r.calcFitness());
+  rockets.sort((a, b) => b.fitness - a.fitness);
+  const best = rockets[0];
+
+  const msgEl = document.getElementById('rocket-msg');
+  if (best.reached) {
+    // show the message at the current generation
+    msgEl.textContent = `Reached! Generation ${generation}`;
+    // reset the generation counter
+    generation = 1;
+    // move the moon to a new random spot
+    newMoon();
+  } else {
+    // only increment if they haven't reached yet
+    generation++;
+    // clear any old message
+    msgEl.textContent = '';
+  }
+
+  // build the next population as before
+  const newPop = [ best.clone() ];
+  while (newPop.length < POP) {
+    const parent = rockets[Math.floor(Math.random() * (POP/2))].clone();
+    parent.mutate();
+    newPop.push(parent);
+  }
+  rockets = newPop;
+  frame   = 0;
+}
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+
+    // draw moon emoji
+    ctx.font = '20px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = COLOR_MOON;
+    ctx.fillText('🌕', moon.x, moon.y);
+
+    // step & draw rockets
+    if (frame < LIFESPAN) {
+      rockets.forEach(r => r.step(frame));
+      frame++;
+    } else {
+      nextGen();
+    }
+
+    const color = ROCKET_COLORS[generation % ROCKET_COLORS.length];
+    rockets.forEach(r => r.draw(color));
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', reset);
+  reset();
+  animate();
+});
     /**
      * Steady-State Ball-on-Beam Demo
      * Implements ẋ = A x + B u, u = –K x; plots ball pos & beam angle.

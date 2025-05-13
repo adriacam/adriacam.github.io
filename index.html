@@ -32,7 +32,7 @@
       <ul>
         <li>
           <span class="role">Nov 2024 – Present</span>
-          <p>Research Engineer Student at THWS developing LoRaWAN payloads for stratospheric balloons using STM32 and RF modules.</p>
+          <p>Research Engineer Student at THWS developing LoRa payloads for stratospheric balloons using STM32 and RF modules.</p>
         </li>
         <li>
           <span class="role">Jul 2023 – Jul 2024</span>
@@ -44,9 +44,9 @@
     <section aria-labelledby="proj-heading">
       <h2 id="proj-heading">Projects</h2>
       <ul>
-        <li>🔗 <strong>LoRaWAN Balloon</strong> <span class="status">(In progress)</span></li>
-        <li>🔗 <strong>Seafloor Detection Sensor</strong> <span class="status">(In progress)</span></li>
-        <li>🔗 <strong>Ball on a Beam Stabilization</strong> <span class="status">(In progress)</span></li>
+        <li>🔗 <strong>LoRa Balloon</strong> <span class="status">(In progress)</span></li>
+        <li>🔗 <strong>Seafloor Detection Sensor</strong></li>
+        <li>🔗 <strong>Ball on a Beam Stabilization</strong></li>
       </ul>
     </section>
 
@@ -57,12 +57,12 @@
         <div class="card">
           <div class="info-icon">ℹ️</div>
           <div class="info-panel">
-            <p>This is a rotary engine, an early type of combustion engine dessigned with an odd number of cylinders.</p>
+            <p>Optimized a two-component bearing assembly for high-speed spindle applications.</p>
           </div>
           <div class="card-body">
-            <div class="card-title">🛩️ Rotary Engine</div>
+            <div class="card-title">🛞 Bearing unit</div>
             <model-viewer
-              src="files/engine/scene.gltf"
+              src="files/bearing_unit.glb"
               alt="Rotary engine"
               auto-rotate
               camera-controls
@@ -71,15 +71,16 @@
           </div>
         </div>
 
-        <!-- Langton’s Ant Card -->
-        <div class="card">
+      <!-- Genetic Rocket-to-the-Moon Demo Card -->
+        <div class="card rocket-card">
           <div class="info-icon">ℹ️</div>
           <div class="info-panel">
-            <p>This is a Langton's Ant, a 2D Turing machine. When a cell is coloured, it turns right. When is not painted, it turns left.</p>
+            <p>Implemented a GA-driven demo where rockets learn over successive generations to land on a randomly positioned moon.</p>
           </div>
           <div class="card-body">
-            <div class="card-title">🐜 Langton’s Ant</div>
-            <canvas id="gen-art" aria-label="Langton’s Ant Simulation"></canvas>
+            <div class="card-title">🚀 Rocket to the Moon</div>
+            <canvas id="rocket-canvas" aria-label="Genetic Rocket Simulation"></canvas>
+            <div id="rocket-msg" class="rocket-msg"></div>
           </div>
         </div>
 
@@ -87,7 +88,7 @@
         <div class="card">
           <div class="info-icon">ℹ️</div>
           <div class="info-panel">
-            <p>This is a full-state feedback controller, the controllability matrix was calculate with Ackermann's formula using the following python script:<a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/python">Github</a>.</p>
+            <p>Computed the controllability matrix in Python (see <a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/python">GitHub</a>) and implemented full-state feedback control; drag the dot on the Y-axis to tune the set-point.</p>
           </div>
           <div class="card-body">
             <div class="card-title">⚖️ Full-State Feedback Controller</div>
