@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.font         = '16px serif';
         ctx.textAlign    = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('🚀', this.pos.x, this.pos.y);
+        ctx.fillText('🛸', this.pos.x, this.pos.y);
       }
       calcFitness() {
         const d = Math.hypot(this.pos.x - moon.x, this.pos.y - moon.y);
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       init() {
         this.history = [];
-        this.x = [0.2, 0, 0.1, 0];
+        this.x = [0.5, 0, 0.1, 0];
       }
 
       step() {
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.setLineDash([]);
 
         // trace
-        ctx.strokeStyle = styles.getPropertyValue('--accent-primary').trim();
+        ctx.strokeStyle = styles.getPropertyValue('--text-main').trim();
         ctx.beginPath();
         this.history.forEach((val, i) => {
           const x  = yAxisX + (i / this.maxPts) * (W - yAxisX);

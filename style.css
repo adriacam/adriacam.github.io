@@ -1,32 +1,40 @@
 /*——————————————————————————————————————————————*/
 /* CSS Variables & Theme Overrides */
-:root {
-  --bg-main:           #001219;
-  --bg-alt:            #005f73;
-  --text-main:         #e9d8a6;
-  --text-secondary:    #94d2bd;
-  --accent-primary:    #ee9b00;
-  --accent-secondary:  #ca6702;
-  --highlight:         #bb3e03;
-  --linkedin-btn:      #0a9396;
-  --accent-primary-dark: #cc7a00;
-  --linkedin-btn-dark:   #087d83;
+:root { /* Dark theme */
+  /* Surfaces */
+  --bg-main:             #0d1321;   
+  --bg-alt:              #1d2d44;   
 
-  --font-mono:         'Roboto Mono', monospace;
-  --body-padding:      2rem;
-  --max-width:         900px;
-  --card-radius:       0.5rem;
-  --card-shadow:       0 8px 16px rgba(0,0,0,0.3);
-  --pop-scale:         1.05;
-  --reveal-duration:   0.6s;
+  /* Typography */
+  --text-main:           #F0EBD8;   
+  --text-secondary:      #748CAB;   
+
+  /* Accents */
+  --accent-primary:      #415A77;   
+  --accent-secondary:    #748CAB;   
+  --highlight:           #748CAB;   
+
+  /* Branding buttons */
+  --linkedin-btn:        #0A66C2;   
+  --accent-primary-dark: #153B58;   
+  --linkedin-btn-dark:   #084C99;   
+
+
+  --body-padding:        2rem;
+  --max-width:           900px;
+  --card-radius:         0.5rem;
+  --card-shadow:         0 8px 16px rgba(0,0,0,0.3);
+  --pop-scale:           1.05;
+  --reveal-duration:     0.6s;
 }
 
 /* Light-theme overrides */
 html[data-theme="light"] {
-  --bg-main:         #ffffff;
-  --bg-alt:          #f5f5f5;
-  --text-main:       #001219;
-  --text-secondary:  #758494;
+  --bg-main:             #F5F6F8;   
+  --bg-alt:              #FFFFFF;   
+
+  --text-main:           #0D1321;   
+  --text-secondary:      #3E5C76;   
 }
 
 /*——————————————————————————————————————————————*/
@@ -40,8 +48,9 @@ html[data-theme="light"] {
 html {
   background-color: var(--bg-main);
   color:            var(--text-main);
-  font-family:      var(--font-mono);
+  font-family:      system-ui, sans-serif;
 }
+
 
 body {
   max-width: var(--max-width);
@@ -123,7 +132,7 @@ section {
 
 h2 {
   font-size:    1.8rem;
-  color:        var(--accent-secondary);
+  color:        var(--text-secondary);
   border-bottom: 2px solid var(--text-secondary);
   padding-bottom: 0.5rem;
   margin-bottom:  1rem;
@@ -162,6 +171,10 @@ li p {
   color:       var(--accent-secondary);
   margin-left: 0.5rem;
 }
+section[aria-labelledby="exp-heading"] time {
+  font-style: italic;
+  color:      var(--text-secondary);
+}
 
 /*——————————————————————————————————————————————*/
 /* Showcase Grid & Cards */
@@ -184,6 +197,7 @@ li p {
   display:          flex;
   flex-direction:   column;
   align-items:      center;
+  padding-right: 1.5rem;
 }
 
 .card .card-body > .card-title {
@@ -199,6 +213,7 @@ li p {
 .card-title {
   font-weight:   bold;
   margin-bottom: 0.75rem;
+  padding-right: 0.5rem;
 }
 
 /*——————————————————————————————————————————————*/
@@ -213,7 +228,13 @@ li p {
   background:    var(--bg-alt);
   display:       block;
 }
-
+.rocket-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+.rocket-card .rocket-msg {
+  min-height: 1.2em; /* same as your font-size */
+}
 /*——————————————————————————————————————————————*/
 /* Ball-on-Beam Slider */
 .slider-label {
@@ -299,11 +320,8 @@ li p {
   gap: 2rem;
 }
 .skills__column h3 {
-  font-size: 1.2rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--accent-color);
-  padding-bottom: 0.25rem;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .skills__column ul {
@@ -314,7 +332,6 @@ li p {
 .skills__column li {
   position: relative;
   padding-left: 1.2rem;
-  line-height: 1.6;
   margin-bottom: 0.5rem;
 }
 
@@ -322,7 +339,6 @@ li p {
   content: "•";
   position: absolute;
   left: 0;
-  color: var(--accent-color);
 }
 
 /*——————————————————————————————————————————————*/
@@ -378,5 +394,13 @@ footer {
   body   { padding: 1rem; }
   h1     { font-size: 2rem; }
   h2     { font-size: 1.5rem; }
+  h3     { font-size: 1.3rem; }
   .showcase-grid { grid-template-columns: 1fr; }
+  section[aria-labelledby="exp-heading"] ul li {
+    display: block !important;
+  }
+  section[aria-labelledby="exp-heading"] ul li time {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 }
