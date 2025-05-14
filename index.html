@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Adria Cammerer Llodra – Mechatronics & Sustainable Tech</title>
-  <meta name="description" content="Mallorcan mechatronics student in Germany passionate about aerospace, automation, signal processing, control systems, and embedded development.">
+  <title>Adria Cammerer Llodra – Mechatronics Engineering</title>
+  <meta name="description" content="Mallorcan mechatronics student with a passion for drones, signal processing, control systems, and embedded development.">
   
   <!-- Core CSS -->
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
   <!-- 3D model viewer -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
@@ -17,8 +17,8 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-
   <header>
+    <!-- header content -->
     <h1>
       <span class="name-first">adrià.cam</span><span class="name-last">merer.llodrà</span>
     </h1>
@@ -27,16 +27,28 @@
   </header>
 
   <main>
+
+    <!-- About Me -->
+    <section id="about" class="about">
+      <h2 class="about__title">👋🏻Hi, I’m Adrià</h2>
+      <p class="about__lead">
+        Mechatronics Engineering student at THWS, I build reliable automation and intelligent control systems—whether it’s LoRa links for stratospheric balloons or sensor filters for marine probes.
+      </p>
+      <p>
+        I thrive on solving tricky engineering problems, quickly mastering new tools, and creating reliable, effective solutions. Off-duty, you'll find me hiking German trails, capturing landscape & astronomy photos, or cooking great meals for friends.
+      </p>
+    </section>
+
     <section aria-labelledby="exp-heading">
       <h2 id="exp-heading">Experience</h2>
       <ul>
         <li>
-          <span class="role">Nov 2024 – Present</span>
-          <p>Research Engineer Student at THWS developing LoRa payloads for stratospheric balloons using STM32 and RF modules.</p>
+          <time datetime="2024-11">Nov 2024 – Present</time>
+          <p>Research Engineer Student at THWS developing LoRa telemetry links for stratospheric balloons using STM32 and RF modules.</p>
         </li>
         <li>
-          <span class="role">Jul 2023 – Jul 2024</span>
-          <p>Engineering Intern at Schienen Güter Logistik – scanned physical documents and automated sorting in Python, eliminating manual processing tasks.</p>
+          <time datetime="2023-07">Jul 2023 – Jul 2024</time>
+          <p>Engineering Intern at Schienen Güter Logistik – automated sorting in Python, eliminating manual processing tasks.</p>
         </li>
       </ul>
     </section>
@@ -85,22 +97,74 @@
         </div>
 
         <!-- Full-State Feedback Controller Card -->
-        <div class="card">
+        <div class="card ss-card">
           <div class="info-icon">ℹ️</div>
           <div class="info-panel">
             <p>Computed the controllability matrix in Python (see <a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/python">GitHub</a>) and implemented full-state feedback control; drag the dot on the Y-axis to tune the set-point.</p>
           </div>
           <div class="card-body">
             <div class="card-title">⚖️ Full-State Feedback Controller</div>
-            <canvas id="ss-canvas" aria-label="Ball Position vs Time"></canvas>
+              <div class="slider-wrapper">
+                <canvas id="ss-canvas" aria-label="Ball Position vs Time"></canvas>
+                <div id="ss-handle" class="ss-handle" role="slider" aria-valuemin="-0.6" aria-valuemax="0.6"></div>
+              </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="int-heading">
-      <h2 id="int-heading">Interests</h2>
-      <p>Space, aviation, robotics, photography, cooking, and outdoor sports.</p>
+    <!-- Skills & Tools -->
+    <section id="skills" class="skills">
+      <div class="skills__container">
+        <h2 class="skills__title">Core Skills</h2>
+        <div class="skills__columns">
+
+          <div class="skills__column">
+            <h3>Engineering & CAD</h3>
+            <ul>
+              <li>CAD Design</li>
+              <li>Mechanical Prototyping & Testing</li>
+              <li>Control Systems Design</li>
+              <li>Sensor Integration</li>
+            </ul>
+          </div>
+
+          <div class="skills__column">
+            <h3>Embedded & Electronics</h3>
+            <ul>
+              <li>STM32 & Arduino</li>
+              <li>LoRa & RF Communications</li>
+              <li>PCB Basics & Circuit Debugging</li>
+            </ul>
+          </div>
+
+          <div class="skills__column">
+            <h3>Software & Programming</h3>
+            <ul>
+              <li>Python (Automation, Data Analysis)</li>
+              <li>C/C++ (Embedded Applications)</li>
+              <li>MATLAB & Simulink</li>
+              <li>Java</li>
+            </ul>
+          </div>
+
+          <div class="skills__column">
+            <h3>Specialized Interests</h3>
+            <ul>
+              <li>Robotics & Automation</li>
+              <li>Aerospace Systems & Satellite Tech</li>
+            </ul>
+          </div>
+
+          <div class="skills__column">
+            <h3>Languages</h3>
+            <ul>
+              <li>English, German, Spanish, Catalan</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
     </section>
   </main>
 
