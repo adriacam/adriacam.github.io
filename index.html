@@ -7,6 +7,11 @@
   <title>Adria Cammerer Llodra – Mechatronics Engineering</title>
   <meta name="description" content="Mallorcan mechatronics student with a passion for drones, signal processing, control systems, and embedded development.">
   
+  <link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+  rel="stylesheet"
+  />
+
   <!-- Core CSS -->
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -36,7 +41,7 @@
         Mechatronics Engineering student at THWS, I build reliable automation and intelligent control systems—whether it’s LoRa links for stratospheric balloons or sensor filters for marine probes.
       </p>
       <p>
-        I thrive on solving tricky engineering problems, quickly mastering new tools, and creating reliable, effective solutions. Off-duty, you'll find me hiking German trails, capturing landscape & astronomy photos, or cooking great meals for friends.
+        I thrive on solving tricky engineering problems, quickly mastering new tools, and creating reliable, effective solutions. Off-duty, you'll find me hiking German trails, capturing landscape & astronomy photos.
       </p>
     </section>
 
@@ -169,17 +174,50 @@
     </section>
   </main>
 
-  <footer>
-    <h2>Get in Touch</h2>
-    <div class="contact-links">
-      <a href="mailto:adria.arbiet@gmail.com" class="contact-btn email-btn">
-        ✉️ adria.arbiet@gmail.com
-      </a>
-      <a href="https://www.linkedin.com/in/adriacam/" class="contact-btn linkedin-btn" target="_blank" rel="noopener">
-        🔗 LinkedIn
-      </a>
+ <footer>
+  <h2>Get in Touch</h2>
+  <div class="contact-links">
+    <div class="copy-container">
+      <button
+        id="copy-email"
+        class="contact-btn copy-btn"
+        aria-label="Copy email address to clipboard">
+        <!-- material “content_copy” icon -->
+        <svg
+          class="copy-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          aria-hidden="true"
+          focusable="false">
+          <path fill="currentColor"
+            d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1
+               .9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+      </button>
+      <span
+        id="copy-feedback"
+        class="copy-feedback"
+        role="alert"
+        aria-live="assertive">
+      </span>
     </div>
-  </footer>
+
+    <a
+      href="mailto:adria.arbiet@gmail.com"
+      class="contact-btn email-btn"
+      >✉️ adria.arbiet@gmail.com</a
+    >
+    <a
+      href="https://www.linkedin.com/in/adriacam/"
+      class="contact-btn linkedin-btn"
+      target="_blank"
+      rel="noopener"
+      >🔗 LinkedIn</a
+    >
+  </div>
+</footer>
 
 </body>
 </html>

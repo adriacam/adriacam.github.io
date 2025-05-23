@@ -298,3 +298,54 @@ document.addEventListener('DOMContentLoaded', () => {
     new Demo(CONFIG.DT, A, B, K).start();
   })();
 });
+
+// ——— Copy Email to Clipboard ———
+(function () {
+  const btn = document.getElementById('copy-email');
+  const fb  = document.getElementById('copy-feedback');
+  const link= document.querySelector('.email-btn');
+  const email = link ? link.textContent.trim().replace(/^✉️\s*/, '') : 'adria.arbiet@gmail.com';
+
+  // ensure button has correct label
+  btn.setAttribute('aria-label', `Copy ${email} to clipboard`);
+
+  // fallback for older browsers
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'absolute';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(err);
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+
+  // copy + feedback
+  async function copyEmail() {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        await fallbackCopy(email);
+      }
+      fb.textContent = 'Email copied!';
+    } catch (err) {
+      console.error('Copy failed', err);
+      fb.textContent = 'Copy failed';
+    } finally {
+      fb.classList.add('visible');
+      setTimeout(() => fb.classList.remove('visible'), 1500);
+    }
+  }
+
+  btn.addEventListener('click', copyEmail);
+})();
+
