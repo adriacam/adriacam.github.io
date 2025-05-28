@@ -59,14 +59,68 @@
       </ul>
     </section>
 
-    <section aria-labelledby="proj-heading">
-      <h2 id="proj-heading">Projects</h2>
-      <ul>
-        <li>🔗 <strong>LoRa Balloon</strong> <span class="status">(In progress)</span></li>
-        <li>🔗 <strong>Seafloor Detection Sensor</strong></li>
-        <li>🔗 <strong>Ball on a Beam Stabilization</strong></li>
-      </ul>
-    </section>
+    <!---- Projects – showcase-style cards ---->
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="showcase-grid project-grid"><!-- same grid as Showcase -->
+
+    <!-- LoRa Balloon -->
+    <article class="card project-card in-progress">
+      <span class="status-badge in-progress" aria-label="In progress">In&nbsp;Progress</span>
+
+      <div class="info-icon" aria-label="More info">ℹ️</div>
+      <div class="info-panel">
+        <p>Real-time LoRa telemetry system for a stratospheric weather balloon, integrating STM32 microcontrollers and long-range RF communication.<br>
+          <a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/LoRa-weather-ballon" target="_blank">GitHub</a>
+        </p>
+      </div>
+      <h3 class="card-title">LoRa Balloon</h3>
+      <div class="card-body">
+        <img src="files/LoRa-weather-ballon/lora-balloon.jpg" alt="LoRa Balloon board">
+      </div>
+    </article>
+
+    <!-- Seafloor Detection Sensor -->
+    <article class="card project-card completed">
+      <span class="status-badge completed" aria-label="Completed">Completed</span>
+
+      <div class="info-icon" aria-label="More info">ℹ️</div>
+      <div class="info-panel">
+        <p>Autonomous ultrasonic sensing system for seabottom detection in turbid Baltic Sea conditions, employing embedded systems, signal filtering, and 3D-printed mechanical design.<br>
+        <a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/seafloor-detection">GitHub</a>
+        </p>
+      </div>
+      <h3 class="card-title">Seafloor Detection Sensor</h3>
+      <div class="card-body">
+        <model-viewer
+              src="files/Housing V3.glb"
+              alt="Sensor housing"
+              auto-rotate
+              camera-controls
+              shadow-intensity="1">
+        </model-viewer>
+      </div>
+    </article>
+
+    <!-- Ball-on-a-Beam -->
+    <article class="card project-card completed">
+      <span class="status-badge completed" aria-label="Completed">Completed</span>
+
+      <div class="info-icon" aria-label="More info">ℹ️</div>
+      <div class="info-panel">
+        <p>Full-state feedback controller designed to stabilize and reject disturbances in a ball-on-a-beam system using MATLAB/Simulink.<br><a href="https://github.com/adriacam/adriacam.github.io/tree/main/files/ball-on-a-beam" target="_blank">GitHub</a>
+        </p>
+      </div>
+      <h3 class="card-title">Ball-on-a-Beam</h3>
+      <div class="card-body">
+        <img src="files/ball-on-a-beam/ball on beam.png" alt="Ball on a beam simulation">
+      </div>
+    </article>
+
+  </div>
+</section>
+
 
     <section aria-labelledby="showcase-heading">
       <h2 id="showcase-heading">Showcase</h2>
@@ -81,7 +135,7 @@
             <div class="card-title">Bearing unit</div>
             <model-viewer
               src="files/bearing_unit.glb"
-              alt="Rotary engine"
+              alt="Bearing unit"
               auto-rotate
               camera-controls
               shadow-intensity="1">

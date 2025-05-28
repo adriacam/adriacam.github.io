@@ -430,3 +430,55 @@ footer {
     margin-bottom: 0.5rem;
   }
 }
+
+/*────────────────────────────*/
+/* Project-status badge */
+.status-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  color: var(--bg-main);
+  pointer-events: none;
+  z-index: 3;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;   
+}
+.project-card .card-title {
+  margin: 2rem 1rem 0;  /* push down below the 0.5rem‐top badge */
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  font-weight:   bold;
+
+}
+.project-card .card-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  padding: 1rem;
+}
+
+.project-card img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;    /* keep the whole image */
+  border-radius: 0.25rem; /* optional, matches card rounding */
+}
+
+
+.status-badge.in-progress { background: var(--accent-secondary); }
+.status-badge.completed    { background: var(--accent-primary);  }
+
+/* Tighten project-grid on very narrow screens */
+@media (max-width: 400px) {
+  .project-grid { grid-template-columns: 1fr; }
+}
